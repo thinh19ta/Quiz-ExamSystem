@@ -13,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>There are all collection</h1>
+        <h1>There are all collection</h1>        
         <c:forEach var="i" items="${requestScope.listColDetail}">
 
             <div style="border: 1px solid black; width: 50%; margin: 0 auto 10px auto; text-align: center">

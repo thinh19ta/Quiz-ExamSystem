@@ -5,7 +5,6 @@
 package servlet;
 
 import dao.CollectionDAO;
-import dao.CollectionDetailDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.CollectionDetail;
-import model.Question;
 
 /**
  *
  * @author quoct
  */
-@WebServlet(name = "ListColServlet", urlPatterns = {"/collection"})
-public class CollectionServlet extends HttpServlet {
+@WebServlet(name = "TestOptionServlet", urlPatterns = {"/testoption"})
+public class TestOptionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +37,10 @@ public class CollectionServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListColServlet</title>");
+            out.println("<title>Servlet TestOptionServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListColServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TestOptionServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,15 +58,15 @@ public class CollectionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         int id = Integer.parseInt(request.getParameter("id"));
-        CollectionDetailDAO dDao = new CollectionDetailDAO();
-        CollectionDetail colDetail = dDao.getCollectionDetailById(id);
+
         CollectionDAO dao = new CollectionDAO();
-        List<Question> list = dao.getCollectionById(id);
-        request.setAttribute("colDetail", colDetail);
-        request.setAttribute("collection", list);
-        request.getRequestDispatcher("views/collectionView.jsp").forward(request, response);
+        int so = dao.countCollectionById(id);
+//        PrintWriter out = response.getWriter();
+//        out.print(so);
+        request.setAttribute("so", so);
+        request.setAttribute("id", id);
+        request.getRequestDispatcher("views/testOption.jsp").forward(request, response);
 
     }
 
@@ -85,7 +81,11 @@ public class CollectionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+
+        out.println(request.getParameter("num"));
+        out.println(request.getParameter("id"));
+
     }
 
     /**

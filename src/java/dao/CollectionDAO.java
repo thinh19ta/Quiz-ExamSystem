@@ -32,6 +32,19 @@ public class CollectionDAO extends DBContext {
         }
         return list;
     }
-    
-    
+
+    public int countCollectionById(int id) {
+        String sql = "Select Count(*) From Collection Where CollectionDetailID = " + id;
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
 }

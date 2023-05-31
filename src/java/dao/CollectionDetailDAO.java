@@ -35,6 +35,23 @@ public class CollectionDetailDAO extends DBContext {
         }
         return list;
     }
-    
-    
+
+    public CollectionDetail getCollectionDetailById(int id) {
+
+        String sql = "Select * From CollectionDetail Where CollectionDetailID = " + id;
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                AccountDAO accDAO = new AccountDAO();
+                Account acc = accDAO.getAccountById(rs.getInt(3));
+                CollectionDetail cd = new CollectionDetail(rs.getInt(1), rs.getString(2), acc);
+                return cd;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
 }
