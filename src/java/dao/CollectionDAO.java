@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import model.Collection;
 import model.Question;
 
 /**
@@ -33,7 +32,7 @@ public class CollectionDAO extends DBContext {
         return list;
     }
 
-    public int countCollectionById(int id) {
+    public int countNumInCollectionById(int id) {
         String sql = "Select Count(*) From Collection Where CollectionDetailID = " + id;
 
         try {

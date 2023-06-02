@@ -4,7 +4,7 @@
  */
 package servlet;
 
-import dao.CollectionDetailDAO;
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.CollectionDetail;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
  * @author quoct
  */
-@WebServlet(name = "ListColDetailServlet", urlPatterns = {"/listcoldetail"})
-public class ListColDetailServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class ListColDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListColDetailServlet</title>");
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListColDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,11 +60,7 @@ public class ListColDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CollectionDetailDAO dao = new CollectionDetailDAO();
-        List<CollectionDetail> list = dao.getAllCollectionDetail();
-
-        request.setAttribute("listColDetail", list);
-        request.getRequestDispatcher("views/allCollectionView.jsp").forward(request, response);
+        request.getRequestDispatcher("views/loginView.jsp").forward(request, response);
     }
 
     /**
@@ -78,7 +74,22 @@ public class ListColDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+
+        String userName = request.getParameter("username");
+        String passWord = request.getParameter("password");
+
+        AccountDAO dao = new AccountDAO();
+        Account account = dao.checkAccountExist(userName, passWord);
+
+        if (account != null) {
+            session.setAttribute("account", account);
+            response.sendRedirect(request.getContextPath());
+        } else {
+            request.setAttribute("error", "UserName or Password is invalid!");
+            request.getRequestDispatcher("views/loginView.jsp").forward(request, response);
+        }
+
     }
 
     /**

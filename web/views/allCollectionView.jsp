@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>There are all collection</h1>        
-        <c:forEach var="i" items="${requestScope.listColDetail}">
+        <c:forEach var="i" items="${requestScope.listCollectionDetail}">
 
             <div style="border: 1px solid black; width: 50%; margin: 0 auto 10px auto; text-align: center">
                 <h1> ${i.name}</h1>
