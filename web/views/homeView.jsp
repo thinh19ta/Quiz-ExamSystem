@@ -56,7 +56,7 @@
             <div class="row">  
                 <ul>
                     <li><a href="${pageContext.request.contextPath}">Home</a></li>
-                    <li><a href="aboutUsView.jsp">About</a></li>
+                    <li><a href="views/aboutUsView.jsp">About</a></li>
                     <li><a href="listcollectiondetail">Quizzzz</a></li>
                     <li><a href="library">Your library</a></li>
                 </ul>
@@ -71,7 +71,7 @@
 
             <c:if test="${sessionScope.account != null}">
                 <div class="row">           
-                    Hello ${sessionScope.account.firstName} || <a href="#">Logout</a>
+                    <a href="views/userProfileView.jsp">${sessionScope.account.firstName}</a> || <a href="logout">Logout</a>
                 </div>    
             </c:if>
 

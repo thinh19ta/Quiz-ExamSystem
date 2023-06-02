@@ -54,4 +54,22 @@ public class CollectionDetailDAO extends DBContext {
         return null;
     }
 
+    public List<CollectionDetail> getCollectionDetailByOwner(Account account) {
+
+        String sql = "Select * From CollectionDetail Where Owner = " + account.getId();
+        List<CollectionDetail> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                AccountDAO accDAO = new AccountDAO();
+                Account acc = accDAO.getAccountById(rs.getInt(3));
+                CollectionDetail cd = new CollectionDetail(rs.getInt(1), rs.getString(2), acc);
+                list.add(cd);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
 }
