@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package servlet;
+package servlet.general;
 
 import dao.CollectionDAO;
 import dao.CollectionDetailDAO;
+import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,18 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import model.Account;
 import model.CollectionDetail;
+import model.Question;
 
 /**
  *
  * @author quoct
  */
-@WebServlet(name = "LibraryServlet", urlPatterns = {"/library"})
-public class LibraryServlet extends HttpServlet {
+@WebServlet(name = "ListColServlet", urlPatterns = {"/collection"})
+public class CollectionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +42,10 @@ public class LibraryServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LibraryServlet</title>");
+            out.println("<title>Servlet ListColServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LibraryServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListColServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,15 +63,21 @@ public class LibraryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        CollectionDetailDAO dao = new CollectionDetailDAO();
 
-        List<CollectionDetail> list = dao.getCollectionDetailByOwner((Account) session.getAttribute("account"));
+        //Get ID
+        int id = Integer.parseInt(request.getParameter("id"));
 
-        CollectionDAO coldao = new CollectionDAO();   
+        //Import DAO
+        CollectionDetailDAO collectionDetailDAO = new CollectionDetailDAO();
+        QuestionDAO questionDao = new QuestionDAO();
 
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("views/libraryView.jsp").forward(request, response);
+        CollectionDetail colDetail = collectionDetailDAO.getCollectionDetailById(id);
+
+        List<Question> list = questionDao.getCollectionById(id);
+        request.setAttribute("colDetail", colDetail);
+        request.setAttribute("collection", list);
+        request.getRequestDispatcher("views/collectionView.jsp").forward(request, response);
+
     }
 
     /**

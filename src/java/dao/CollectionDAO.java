@@ -31,7 +31,7 @@ public class CollectionDAO extends DBContext {
         }
         return list;
     }
-
+    
     public int countNumInCollectionById(int id) {
         String sql = "Select Count(*) From Collection Where CollectionDetailID = " + id;
 

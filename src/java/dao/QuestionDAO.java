@@ -6,6 +6,8 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import model.Question;
 
 /**
@@ -14,6 +16,7 @@ import model.Question;
  */
 public class QuestionDAO extends DBContext {
 
+//    Get a question by QuesionID
     public Question getQuestionById(int id) {
         String sql = "Select * From Question Where QuestionId = ?";
 
@@ -37,6 +40,29 @@ public class QuestionDAO extends DBContext {
         }
         return null;
     }
-    
-    
+
+//    Get a list of question by CollectionDetailID
+    public List<Question> getCollectionById(int id) {
+        String sql = "Select * From Collection Join Question On Collection.QuestionID = Question.QuestionID Where CollectionDetailID = ?";
+        List<Question> list = new ArrayList<>();
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Question question = new Question(rs.getInt("QuestionID"),
+                        rs.getString("Detail"),
+                        rs.getString("AnswerA"),
+                        rs.getString("AnswerB"),
+                        rs.getString("AnswerC"),
+                        rs.getString("AnswerD"),
+                        rs.getString("TrueAnswer"));
+                list.add(question);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
 }

@@ -14,6 +14,7 @@ import model.Account;
  */
 public class AccountDAO extends DBContext {
 
+//  Pass ID argument, return a Account
     public Account getAccountById(int id) {
         String sql = "Select * From Account Where AccountID = ?";
         try {
@@ -39,6 +40,7 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
+//  Check and get a Account, return null if does not exist
     public Account checkAccountExist(String userName, String passWord) {
         String sql = "Select * From Account Where UserName = ? and Password = ?";
         try {

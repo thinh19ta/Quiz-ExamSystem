@@ -17,6 +17,7 @@ import model.CollectionDetail;
  */
 public class CollectionDetailDAO extends DBContext {
 
+//  Get all CollectionDetail in database, return a list
     public List<CollectionDetail> getAllCollectionDetail() {
         List<CollectionDetail> list = new ArrayList<>();
 
@@ -36,6 +37,7 @@ public class CollectionDetailDAO extends DBContext {
         return list;
     }
 
+//  Pass ID argument, return only one CollectionDetail corresponding
     public CollectionDetail getCollectionDetailById(int id) {
 
         String sql = "Select * From CollectionDetail Where CollectionDetailID = " + id;
@@ -54,6 +56,7 @@ public class CollectionDetailDAO extends DBContext {
         return null;
     }
 
+//    Pass a Account, return all collection of Account
     public List<CollectionDetail> getCollectionDetailByOwner(Account account) {
 
         String sql = "Select * From CollectionDetail Where Owner = " + account.getId();
