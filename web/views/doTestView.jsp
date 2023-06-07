@@ -27,16 +27,22 @@
                         <h1> ${i.detail}</h1>
 
                         <input name="${i.id}" value="A" id="${i.answerA}" type="radio">
-                        <h3><label for="${i.answerA}">${i.answerA}</label></h3><br>
-
+                        <h3>${i.answerA}</h3>
+                        <br>
                         <input name="${i.id}" value="B" id="${i.answerB}" type="radio">
-                        <h3><label for="${i.answerB}">${i.answerB}</label></h3><br>
+                        <h3>${i.answerB}</h3>
+
+                        <br>
 
                         <input name="${i.id}" value="C" id="${i.answerC}" type="radio">
-                        <h3><label for="${i.answerC}">${i.answerC}</label></h3><br>
+                        <h3>${i.answerC}</h3>
+                        <br>
+
 
                         <input name="${i.id}" value="D" id="${i.answerD}" type="radio">
-                        <h3><label for="${i.answerD}">${i.answerD}</label></h3><br>
+                        <h3>${i.answerD}</h3>
+                        <br>
+
 
                     </div>
                 </div>

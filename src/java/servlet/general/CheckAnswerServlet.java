@@ -11,6 +11,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import model.Question;
+import service.QuestionService;
 
 /**
  *
@@ -41,17 +47,25 @@ public class CheckAnswerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String a = request.getParameter("allID");
-
-        String arr[] = a.trim().split(" ");
-
         PrintWriter out = response.getWriter();
-        for (String string : arr) {
-            out.println(string);
+
+        String listID[] = a.trim().split(" ");
+        Map<Integer, String> results = new HashMap<>();
+
+        for (String string : listID) {
+            results.put(Integer.parseInt(string), request.getParameter(string));
         }
-//        out.print(arr);
+        QuestionService q = new QuestionService();
 
-        String b = request.getParameter("");
+        Map<Question, String> list = q.list(results);
 
+//        for (Question s : list.keySet()) {
+//            out.println(list.get(s));
+//        }
+
+
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("views/testResultView.jsp").forward(request, response);
     }
 
     /**
